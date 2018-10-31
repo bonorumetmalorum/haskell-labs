@@ -1,2 +1,8 @@
-sumAll::(Integer x) => [x] -> [x]
-sumAll x = x.foldr(\a, b -> a + b)(0)
+sumAll::[Int] -> Int
+sumAll x = foldl (+) 0 x
+
+multAll::[Int] -> Int
+multAll x = foldl (*) 1 x
+
+myfoldr::(a -> b -> b) -> b -> t a -> b 
+myfoldr f acc (x:xs) = 
