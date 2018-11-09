@@ -21,4 +21,17 @@ maxElem x = myfoldr (\v acc -> if v > acc then v else acc) 0 x
 flatten::[[a]] -> [a]
 flatten x = myfoldr (\v acc -> v++acc) [] x
 
-data IntOrBool = Int | Bool
+data IntOrBool = Int | Boolean deriving Show
+
+x = [Int, Int, Boolean, Boolean] --this is a polymorphic data type
+
+data Name = String
+
+data Lambda = Var | Lam | App Lambda Lambda
+
+fix::(a -> a) -> a
+fix f = let {x = f x} in x
+
+fact:: Int -> Int
+fact x = fix ((x-1) *)
+
