@@ -30,8 +30,8 @@ data Name = String
 data Lambda = Var | Lam | App Lambda Lambda
 
 fix::(a -> a) -> a
-fix f = let {x = f x} in x
+fix f a = f (fix f)
 
 fact:: Int -> Int
-fact x = fix ((x-1) *)
+fact f x = if x == 0 then 1 else x * (f (x - 1))
 
