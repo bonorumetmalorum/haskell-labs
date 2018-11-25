@@ -34,4 +34,7 @@ free_variables (App lamx lamy) = join (free_variables lamx) (free_variables lamy
 is_closed :: Lam -> Bool
 is_closed lam = if (free_variables lam) == Nil then True else False
 
-subst :: Name -> Lam -> Lam -> -> Lam
+subst :: Name -> Lam -> Lam -> Lam
+subst name (Var namex) lamy = if name == namex then Var name else lamy
+subst name (Abs namex lam) substlam  = if name == namex then Abs namex lam else Abs namex (subst name lam substlam)
+subst name (App lamx lamy) substlam = App (subst name lamx substlam) (subst name lamx lamy)
