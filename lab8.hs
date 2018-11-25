@@ -30,11 +30,13 @@ evalB (Not bexp) mem = inverse (evalB bexp mem) where inverse = \f -> if f then 
 evalB (Equal exp1 exp2) mem = (evalA exp1 mem) == (evalA exp2 mem)
 evalB (Lt exp1 exp2) mem = (evalA exp1 mem) < (evalA exp2 mem)
 
-data Comm = Ass Name Integer | Seq Comm Comm | If Bexp Comm Comm | While Bexp Comm
+data Comm = Ass Name Aexp | Ref Name Name | Seq Comm Comm | If Bexp Comm Comm | While Bexp Comm
 
 evalC::Comm -> Memory -> Memory
 evalC (Seq x y) mem = evalC y (evalC x mem) 
-evalC (Ass n v) mem = update n v mem
+evalC (Ass n exp) mem = update n (evalA exp mem) mem
 evalC (If bexp comx comy) mem = if evalB bexp mem then evalC comx mem else evalC comy mem
 evalC (While bexp com) mem = if evalB bexp mem then evalC (While bexp com) (evalC com mem) else mem
 
+example1 = (Seq (Ass (Name "x") (Number 1)) (Seq (Ass (Name "y") (Var (Name "x"))) (Ass (Name "x") (Var (Name "z")))))
+example2 = (Seq (Ass (Name "z") (Number 5)) (Seq (Ass (Name "x") (Number 4)) (If (Lt (Var (Name "z")) (Var (Name "x"))) (Ass (Name "y") (Var (Name "z"))) (Ass (Name "y") (Var (Name "x"))))))
