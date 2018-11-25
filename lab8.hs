@@ -30,11 +30,11 @@ evalB (Not bexp) mem = inverse (evalB bexp mem) where inverse = \f -> if f then 
 evalB (Equal exp1 exp2) mem = (evalA exp1 mem) == (evalA exp2 mem)
 evalB (Lt exp1 exp2) mem = (evalA exp1 mem) < (evalA exp2 mem)
 
-data Comm = Ass Aexp | Seq Comm Comm | If Bexp Comm Comm | While Bexp Comm
+data Comm = Ass Name Integer | Seq Comm Comm | If Bexp Comm Comm | While Bexp Comm
 
 evalC::Comm -> Memory -> Memory
 evalC (Seq x y) mem = evalC y (evalC x mem) 
-evalC (Ass exp) mem = --need to find and assign or create locla var and assign
-evalC (If bexp comx comy) mem = if evalB bexp then evalC comx mem else evalC comy mem
-evalC (While bexp com) mem = if evalB bexp then evalC (While bexp com) (evalC com mem) else mem
+evalC (Ass n v) mem = update n v mem
+evalC (If bexp comx comy) mem = if evalB bexp mem then evalC comx mem else evalC comy mem
+evalC (While bexp com) mem = if evalB bexp mem then evalC (While bexp com) (evalC com mem) else mem
 
