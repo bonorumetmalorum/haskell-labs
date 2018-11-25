@@ -38,3 +38,5 @@ subst :: Name -> Lam -> Lam -> Lam
 subst name (Var namex) lamy = if name == namex then Var name else lamy
 subst name (Abs namex lam) substlam  = if name == namex then Abs namex lam else Abs namex (subst name lam substlam)
 subst name (App lamx lamy) substlam = App (subst name lamx substlam) (subst name lamx lamy)
+
+eval::Lam -> Lam
