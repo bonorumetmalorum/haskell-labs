@@ -1,13 +1,3 @@
-module Language.Functional(
-    Lam,
-    Name,
-    Set,
-    add,
-    join,
-    remove,
-    subst,
-)where
-
 data Name = Name [Char] deriving (Show, Eq)
 
 data Lam = Var Name | Abs Name Lam| App Lam Lam deriving (Show, Eq)
@@ -34,4 +24,7 @@ free_variables (App lamx lamy) = join (free_variables lamx) (free_variables lamy
 is_closed :: Lam -> Bool
 is_closed lam = if (free_variables lam) == Nil then True else False
 
-subst :: Name -> Lam -> Lam -> -> Lam
+subst :: Name -> Lam -> Lam -> Lam
+subst name v lam = go (remove name (free_variables lam)) where go set | Nil = lam |(Set name others) = subst name v lam
+subst name v (App lamx lamy) = App (subst name v lamx) (subst name v lamy)
+subst name v (Abs param lam) = if name == param then lam else subst name V lam
