@@ -54,4 +54,5 @@ evalC (While bexp com) mem = if evalB bexp mem then evalC (While bexp com) (eval
 
 example1 = (Seq (Ass (Name "x") (Number 1)) (Seq (Ass (Name "y") (Var (Name "x"))) (Ass (Name "x") (Var (Name "z")))))
 example2 = (Seq (Ass (Name "z") (Number 5)) (Seq (Ass (Name "x") (Number 4)) (If (Lt (Var (Name "z")) (Var (Name "x"))) (Ass (Name "y") (Var (Name "z"))) (Ass (Name "y") (Var (Name "x"))))))
-
+mem = (Mem (Name "x", 0) (Mem (Name "y", 3) Nil))
+example3 = (While (Lt (Var (Name "x")) (Var (Name "y"))) (Ass (Name "x") (Add (Number 1) (Var (Name "x")))))
