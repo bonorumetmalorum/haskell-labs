@@ -6,6 +6,7 @@ module Language.Functional(
     join,
     remove,
     subst,
+    eval
 )where
 
 data Name = Name [Char] deriving (Show, Eq)
@@ -40,6 +41,9 @@ subst name v (App lamx lamy) = App (subst name v lamx) (subst name v lamy)
 subst name v (Abs param lam) = if name == param then Abs param lam else Abs param (subst name v lam)
 
 eval :: Lam -> Lam
-eval (App (Abs namex lamx) (Abs namey lamy)) = eval (subst namex lamy lamx)
-eval (Abs name lam) = Abs name (eval lam)
-eval (Var name) = Var name
+eval (App (Abs namex lamx) (t)) = eval (subst namex t lamx)
+eval t = t  
+
+i = Abs (Name "x") (Var (Name "x"))
+two = Abs (Name "f") (Abs (Name "x") (App (Var (Name "f")) (App (Var (Name "f")) (Var (Name "x")))))
+d = Abs (Name "x") (App (Var (Name "x")) (Var (Name "x")))
