@@ -9,3 +9,15 @@ solution (x:xs) ((c, tail):cs) = if (fst (query x ((c, tail):cs))) && (solution 
 solution ([]) clauses = True
 
 knowledgeBase = [ ("likeItalianFood",["likeRissoto","likePasta","likePizza"]),("likeRissoto",[]), ("likePasta",[]), ("likePizza",[])]
+
+putString :: String -> IO ()
+putString [] = return ()
+putString (x:xs) = do putChar x
+                      putStr xs
+
+len :: IO ()
+len = do
+    putStrLn "please type something and press return"
+    input <- getLine
+    putStrLn ("the length of your text is " ++ (show (length input)))
+
