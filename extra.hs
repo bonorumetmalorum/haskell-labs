@@ -24,5 +24,11 @@ s_n_l list = foldr (\a acc -> (if a < (fst acc) then a else fst acc, if a > (snd
 no_dup::(Eq a) => [a] -> [a]
 no_dup list = foldr (\a acc -> case acc of [] -> [a]; (h:t) -> if a == h then acc else [a] ++ acc) [] list
 
-dup::(Eq a) => [a] -> [a]
+dup::[a] -> [a]
 dup list = foldr (\a acc -> a:a:acc) [] list
+
+duplicaten::[a] -> Integer -> [a]
+duplicaten [] num = []
+duplicaten list 0 = list
+duplicaten (h:t) num = (go h (num - 1)) ++ duplicaten t num where go elem no = if no == 0 then elem:[] else elem:(go elem (no - 1))
+
