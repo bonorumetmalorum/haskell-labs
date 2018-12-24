@@ -17,3 +17,6 @@ largest (h:t) acc = if h > acc then largest t h else largest t acc
 smallest::(Ord a) => [a] -> a -> a
 smallest [] acc = acc
 smallest (h:t) acc = if h < acc then smallest t h else smallest t acc
+
+s_n_l::(Ord a, Num a) => [a] -> (a, a)
+s_n_l list = foldr (\a acc -> (if a < (fst acc) then a else fst acc, if a > (snd acc) then a else snd acc)) (999999, 0) list
