@@ -32,3 +32,7 @@ duplicaten [] num = []
 duplicaten list 0 = list
 duplicaten (h:t) num = (go h (num - 1)) ++ duplicaten t num where go elem no = if no == 0 then elem:[] else elem:(go elem (no - 1))
 
+drop_nth::[a] -> Integer -> [a]
+drop_nth list num = go list num where 
+                                    go [] no = []
+                                    go (h:t) no = if no == 1 then go t num else h:(go t (no - 1))
