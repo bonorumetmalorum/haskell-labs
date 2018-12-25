@@ -40,3 +40,17 @@ drop_nth list num = go list num where
 change::Integer -> [Integer] -> [Integer]
 change n [] = []
 change amnt (h:t) = (div amnt h):(change (mod amnt h) t)
+
+index :: (Num t1, Eq t1) => [t] -> t1 -> Maybe t
+index [] n = Nothing
+index (h:t) 0 = Just h
+index (h:t) n = index t (n-1)
+
+index2:: (Num a, Eq a) => ([b], a) -> Maybe b
+index2 (([]), n) = Nothing
+index2 ((h:t), 0) = Just h
+index2 ((h:t), n) = index2 (t, (n - 1))
+
+rotate_1r::[a] -> [a]
+rotate_1r [] = []
+rotate_1r (h:t) = t ++ [h]
