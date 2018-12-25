@@ -54,3 +54,17 @@ index2 ((h:t), n) = index2 (t, (n - 1))
 rotate_1r::[a] -> [a]
 rotate_1r [] = []
 rotate_1r (h:t) = t ++ [h]
+
+split::[a] -> Integer -> [a] -> ([a], [a])
+split [] n a = ([], a)
+split (h:t) 0 a = (a, (h:t))
+split (h:t) num a = split t (num -1) (a ++ [h])
+
+rotn::[a] -> Integer -> [a]
+rotn list n = let (a, b) = split list n [] in b++a
+
+num_of_lower::[Char] -> Int
+num_of_lower list = length [x|x<-list, x >= 'a', x <= 'z'] 
+
+num_of_upper::[Char] -> Int
+num_of_upper list = length [x|x<-list, x >= 'A', x <= 'Z'] 
