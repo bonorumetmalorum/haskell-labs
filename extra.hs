@@ -36,3 +36,7 @@ drop_nth::[a] -> Integer -> [a]
 drop_nth list num = go list num where 
                                     go [] no = []
                                     go (h:t) no = if no == 1 then go t num else h:(go t (no - 1))
+
+change::Integer -> [Integer] -> [Integer]
+change n [] = []
+change amnt (h:t) = (div amnt h):(change (mod amnt h) t)
